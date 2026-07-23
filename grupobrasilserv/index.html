@@ -189,6 +189,11 @@ body {
 .cta svg { width: 16px; height: 16px; flex: none; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .18s ease; }
 .cta:hover svg { transform: translateX(3px); }
 .validity { display: block; margin-top: 2px; font-family: var(--f-mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.wa { display: inline-flex; align-items: center; gap: 9px; justify-self: start; margin-top: 2px; font-weight: 650; font-size: .92rem; text-decoration: none; color: var(--ink); border: 1px solid var(--line); border-radius: 9px; padding: 12px 20px; transition: border-color .18s ease, background .18s ease, transform .18s ease; }
+.wa:hover { border-color: var(--accent); background: #FFF3E9; transform: translateY(-1px); }
+.wa svg { width: 16px; height: 16px; flex: none; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.sig-note { display: flex; align-items: flex-start; gap: 9px; margin-top: 4px; font-size: .78rem; color: var(--muted); line-height: 1.55; }
+.sig-note svg { width: 15px; height: 15px; flex: none; margin-top: 1px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- Rodapé ---------- */
 .foot { margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--line-2); display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
@@ -459,6 +464,21 @@ a:focus-visible, .pf:focus-visible, button:focus-visible { outline: 2px solid va
     </div>
   </section>
 
+  <section class="row">
+    <div class="lbl"><span class="n">08</span> Contrato e assinatura digital</div>
+    <div class="c">
+      <p>Após a aprovação, o contrato de prestação de serviço é enviado para assinatura eletrônica pelo <b>Autentique</b> — 100% digital, sem papel e sem necessidade de reconhecimento de firma em cartório.</p>
+      <a class="wa" id="ctaContrato" href="#" target="_blank" rel="noopener noreferrer">
+        Solicitar contrato para assinatura
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L18.5 9.5l-4-4L4 16v4z" /><path d="M13 7l4 4" /></svg>
+      </a>
+      <span class="sig-note">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12.5l2 2 4.5-5" /><circle cx="12" cy="12" r="9" /></svg>
+        Assinatura eletrônica simples, com validade jurídica conforme a MP nº 2.200-2/2001 e a Lei nº 14.063/2020 — dispensa certificado digital para este tipo de contrato.
+      </span>
+    </div>
+  </section>
+
   <footer class="foot">
     <img class="foot-logo" src="apollo-logo.png" alt="Apollo Gestão Digital">
     <span class="foot-info">
@@ -560,6 +580,9 @@ a:focus-visible, .pf:focus-visible, button:focus-visible { outline: 2px solid va
 
   var waMsg = encodeURIComponent('Olá! Vi a proposta da landing page do Grupo BrasilServ e quero aprovar e começar o projeto.');
   document.getElementById('ctaWa').href = 'https://wa.me/5516996112109?text=' + waMsg;
+
+  var contratoMsg = encodeURIComponent('Olá! Aprovei a proposta de landing page do Grupo BrasilServ e gostaria de receber o contrato para assinatura digital.');
+  document.getElementById('ctaContrato').href = 'https://wa.me/5516996112109?text=' + contratoMsg;
 })();
 </script>
 </body>
