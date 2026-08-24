@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proposta — Grupo BrasilServ | Painel Administrativo</title>
+<style>
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+:root {
+  color-scheme: light;
+
+  --page:   #E9EAEC;
+  --paper:  #FFFFFF;
+  --ink:    #14151A;
+  --ink-2:  #4B4D56;
+  --muted:  #8B8E98;
+  --line:   rgba(20,21,26,.13);
+  --line-2: rgba(20,21,26,.07);
+
+  /* gradiente Apollo: laranja quente */
+  --grad:   linear-gradient(95deg, #FFB238 0%, #F2701D 55%, #E8460C 100%);
+  --accent: #E8590C;
+
+  --f-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --f-mono: ui-monospace, "Cascadia Code", "SF Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+}
+
+body {
+  margin: 0; background: var(--page); color: var(--ink-2);
+  font-family: var(--f-sans); line-height: 1.62;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  padding: clamp(0px, 4vw, 40px) 0;
+}
+
+.sheet {
+  max-width: 680px; margin: 0 auto; position: relative; overflow: hidden;
+  background: var(--paper); border: 1px solid var(--line);
+  box-shadow: 0 1px 1px rgba(20,21,26,.03), 0 24px 60px -30px rgba(20,21,26,.28);
+  padding: clamp(36px, 7vw, 64px) clamp(24px, 6vw, 56px) clamp(38px, 7vw, 56px);
+  animation: rise .6s cubic-bezier(.2,.7,.2,1) both;
+}
+.sheet::before {
+  content: ""; position: absolute; top: -120px; right: -120px; width: 320px; height: 320px;
+  background: radial-gradient(closest-side, rgba(232,89,12,.13), transparent 70%);
+  pointer-events: none;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Timbre ---------- */
+.head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; position: relative; }
+.logo { height: 34px; width: auto; display: block; flex: none; }
+.ref { font-family: var(--f-mono); font-size: .64rem; line-height: 1.7; letter-spacing: .04em; color: var(--muted); text-align: right; text-transform: uppercase; padding-top: 2px; min-width: 0; overflow-wrap: anywhere; }
+.ref b { color: var(--ink-2); font-weight: 600; }
+
+.gradline { height: 2px; background: var(--grad); border: 0; margin: 22px 0 0; opacity: .92; }
+
+/* ---------- Capa ---------- */
+.cover-meta { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 30px 0 0; padding: 18px 20px; border: 1px solid var(--line); border-radius: 12px; background: #FFFAF5; }
+.cover-meta > div { display: flex; flex-direction: column; gap: 3px; }
+.cover-meta > div > span { font-family: var(--f-mono); font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.cover-meta b { color: var(--ink); font-weight: 600; font-size: .9rem; line-height: 1.4; text-wrap: balance; }
+
+/* ---------- Intro ---------- */
+.intro { padding: 46px 0 18px; }
+.eyebrow { font-family: var(--f-mono); font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.intro .eyebrow { display: block; margin-bottom: 18px; }
+.statement { font-weight: 500; color: var(--ink); font-size: clamp(1.3rem, 3.7vw, 1.72rem); line-height: 1.32; letter-spacing: -.015em; text-wrap: balance; margin: 0; }
+.g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.statement .g { font-weight: 600; }
+.lead { margin: 0; color: var(--ink-2); font-size: .98rem; line-height: 1.65; }
+.intro .lead { margin-top: 20px; }
+
+/* ---------- Autoridade ---------- */
+.band { padding: 46px 0 22px; }
+.band > .eyebrow { display: block; margin-bottom: 20px; }
+.stats { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.stat { padding: 18px 20px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, #FFFAF5, #FFF3E9); }
+.stat b { display: block; font-size: 1.22rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.1; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stat .sl { display: block; color: var(--ink-2); font-size: .82rem; margin-top: 4px; line-height: 1.4; }
+
+/* ---------- Seções ---------- */
+.row { display: grid; grid-template-columns: 1fr; gap: 22px; padding: 56px 0; border-top: 1px solid var(--line-2); }
+.row:first-of-type { border-top: 0; }
+.lbl { font-family: var(--f-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); display: flex; align-items: baseline; gap: 9px; }
+.lbl .n { font-weight: 600; color: var(--accent); }
+.c { color: var(--ink-2); display: grid; gap: 18px; align-content: start; }
+.c > p { margin: 0; text-wrap: pretty; }
+.fronts .fd, .lead, .fineprint, .pay, .bitems span { text-wrap: pretty; }
+
+.note { margin-top: 8px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 11px; background: #FAFBFE; font-size: .86rem; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
+.note b { color: var(--ink); }
+.note p { margin: 0; }
+.note p + p { margin-top: 14px; }
+.fineprint { margin: 4px 2px 0; font-size: .78rem; color: var(--muted); line-height: 1.6; }
+
+/* ---------- Listas (checks) ---------- */
+.dl { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr; gap: 15px 28px; }
+.dl li { position: relative; padding-left: 27px; color: var(--ink); font-size: .95rem; line-height: 1.5; }
+.dl li::before { content: ""; position: absolute; left: 0; top: .16em; width: 16px; height: 16px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9.5' fill='none' stroke='%23E8590C' stroke-width='1.8'/%3E%3Cpath d='M8 12.4l2.6 2.6 5.4-6' fill='none' stroke='%23E8590C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain; opacity: .85; }
+.dl li.free::before { opacity: 1; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FFB238'/%3E%3Cstop offset='1' stop-color='%23E8460C'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='11' fill='url(%23g)'/%3E%3Cpath d='M7.5 12.6l3.2 3.2 6-6.6' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.dl.one { grid-template-columns: 1fr; }
+.dl.small li { font-size: .87rem; padding-left: 25px; }
+.dl li b { color: var(--ink); font-weight: 650; }
+
+/* ---------- Bônus destacados ---------- */
+.bonus { margin-top: 8px; border: 1px solid var(--line); border-radius: 12px; background: #FAFBFE; padding: 20px 22px; display: grid; gap: 16px; }
+.btag { font-family: var(--f-mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
+.bitems { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.bitems > div { position: relative; padding-left: 27px; }
+.bitems > div::before { content: ""; position: absolute; left: 0; top: .1em; width: 16px; height: 16px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FFB238'/%3E%3Cstop offset='1' stop-color='%23E8460C'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='11' fill='url(%23g)'/%3E%3Cpath d='M7.5 12.6l3.2 3.2 6-6.6' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / contain; }
+.bitems b { display: block; color: var(--ink); font-weight: 650; font-size: .93rem; }
+.bitems span { display: block; color: var(--ink-2); font-size: .8rem; margin-top: 2px; line-height: 1.45; }
+
+/* ---------- Ícone + título + subtítulo ---------- */
+.fronts { display: grid; gap: 20px; margin-top: 2px; }
+.fronts > div { display: grid; grid-template-columns: 24px 1fr; column-gap: 11px; row-gap: 3px; align-items: center; }
+.fronts .fi { display: grid; place-items: center; width: 24px; height: 24px; }
+.fronts .fi svg { width: 17px; height: 17px; fill: none; stroke: var(--accent); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.fronts b { grid-column: 2; color: var(--ink); font-weight: 650; font-size: .95rem; line-height: 1.35; }
+.fronts .fd { grid-column: 2; color: var(--ink-2); font-size: .86rem; line-height: 1.5; }
+
+/* ---------- Oferta (duas trilhas) ---------- */
+.offer-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 2px; }
+.offer { position: relative; border: 1px solid var(--line); border-radius: 14px; background: #FAFBFE; overflow: hidden; display: flex; flex-direction: column; }
+.offer.rec { border-color: rgba(232,89,12,.35); background: #FFFAF5; }
+.offer-top { height: 3px; background: var(--line-2); }
+.offer.rec .offer-top { background: var(--grad); }
+.offer-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.badge { flex: none; font-family: var(--f-mono); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: #fff; background: var(--grad); border-radius: 20px; padding: 4px 11px; white-space: nowrap; }
+.offer-body { padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 18px; flex: 1; }
+.offer-body .eyebrow { display: block; }
+.offer-title { color: var(--ink); font-weight: 650; font-size: 1.02rem; margin: 0; line-height: 1.3; }
+.offer-sub { margin: -10px 0 0; font-size: .84rem; color: var(--ink-2); line-height: 1.55; }
+.offer .dl { grid-template-columns: 1fr; gap: 12px; }
+.offer-div { height: 1px; background: var(--line-2); }
+.offer-price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-top: auto; }
+.price { font-family: var(--f-mono); font-weight: 700; color: var(--ink); font-size: 1.7rem; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.price .per { font-size: .82rem; color: var(--muted); font-weight: 600; }
+.pay { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+.offer-foot { font-size: .78rem; color: var(--muted); line-height: 1.55; padding-top: 14px; border-top: 1px solid var(--line-2); text-wrap: pretty; }
+.offer-foot b { color: var(--ink-2); }
+
+.vs { display: flex; align-items: center; gap: 12px; margin: 2px 0; }
+.vs::before, .vs::after { content: ""; flex: 1; height: 1px; background: var(--line-2); }
+.vs span { font-family: var(--f-mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- Próximo passo ---------- */
+.next .c { color: var(--ink); }
+.cta-h { margin: 0; font-weight: 500; color: var(--ink); font-size: 1.3rem; letter-spacing: -.015em; line-height: 1.3; text-wrap: balance; }
+.cta { display: inline-flex; align-items: center; gap: 9px; justify-self: start; margin-top: 2px; font-weight: 600; font-size: .92rem; text-decoration: none; color: #fff; background: var(--accent); border-radius: 9px; padding: 13px 22px; transition: background .18s ease, transform .18s ease; }
+.cta:hover { background: #C94A0A; transform: translateY(-1px); }
+.cta svg { width: 16px; height: 16px; flex: none; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .18s ease; }
+.cta:hover svg { transform: translateX(3px); }
+.validity { display: block; margin-top: 2px; font-family: var(--f-mono); font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- Rodapé ---------- */
+.foot { margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--line-2); display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.foot-logo { height: 26px; width: auto; display: block; }
+.foot-info { font-family: var(--f-mono); font-size: .66rem; line-height: 1.85; letter-spacing: .03em; color: var(--muted); text-transform: uppercase; text-align: right; min-width: 0; overflow-wrap: anywhere; }
+
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+@media (min-width: 640px) {
+  .row { grid-template-columns: 148px 1fr; gap: 26px 40px; }
+  .lbl { padding-top: 2px; }
+  .cover-meta { grid-template-columns: 1.7fr 1fr 1.1fr; align-items: start; }
+  .stats { grid-template-columns: repeat(3, 1fr); }
+}
+@media print {
+  body { background: #fff; padding: 0; }
+  .sheet { box-shadow: none; border: 0; max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet { animation: none; }
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="head">
+    <img class="logo" src="apollo-logo.png" alt="Apollo Gestão Digital">
+    <div class="ref">
+      <b>Proposta comercial</b><br>
+      Painel Administrativo Interativo<br>
+      Ref. GBS · grupobrasilserv.com.br
+    </div>
+  </header>
+  <hr class="gradline">
+
+  <div class="cover-meta">
+    <div><span>Preparada para</span><b>Grupo BrasilServ</b></div>
+    <div><span>Data</span><b>24/08/2026</b></div>
+    <div><span>Validade da proposta</span><b>7 dias</b></div>
+  </div>
+
+  <div class="intro">
+    <span class="eyebrow">Proposta comercial · Painel administrativo interativo</span>
+    <p class="statement">Esta proposta tem como objetivo o desenvolvimento de um <span class="g">painel administrativo interativo</span> integrado ao site do Grupo BrasilServ.</p>
+    <p class="lead">Um sistema que permite à própria equipe do Grupo BrasilServ atualizar banners, documentos da NR1 e relatórios de transparência diretamente pelo site — sem depender de suporte técnico para cada alteração.</p>
+  </div>
+
+  <section class="band">
+    <span class="eyebrow">Experiência aplicada ao seu projeto</span>
+    <div class="stats">
+      <div class="stat"><b>14 anos</b><span class="sl">de atuação no mercado digital</span></div>
+      <div class="stat"><b>+7 dígitos</b><span class="sl">gerenciados em anúncios online</span></div>
+      <div class="stat"><b>+300</b><span class="sl">estruturas digitais e websites criados</span></div>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="lbl"><span class="n">01</span> O que será desenvolvido</div>
+    <div class="c">
+      <p>Hoje, qualquer atualização de banner, documento ou relatório no site exige suporte técnico. O objetivo deste projeto é entregar autonomia para o Grupo BrasilServ, com:</p>
+      <div class="fronts">
+        <div>
+          <span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 10h18M8 15h4" /></svg></span>
+          <b>Banners rotativos</b>
+          <span class="fd">Cadastro de múltiplos banners com rotação automática e periódica, sem precisar mexer em código.</span>
+        </div>
+        <div>
+          <span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v10M8 10l4 4 4-4" /><path d="M5 16.5v2a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5v-2" /></svg></span>
+          <b>Upload de arquivos da NR1</b>
+          <span class="fd">Área dedicada para a equipe subir e substituir os documentos exigidos pela NR1 diretamente pelo painel.</span>
+        </div>
+        <div>
+          <span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" /><path d="M14 3v4h4M9 13h6M9 16.5h6" /></svg></span>
+          <b>Portal da transparência</b>
+          <span class="fd">Gestão dos relatórios publicados no site (salarial, institucionais etc.), com histórico organizado.</span>
+        </div>
+        <div>
+          <span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3" /><path d="M8 9h8M8 13h8M8 17h5" /></svg></span>
+          <b>Painel único e intuitivo</b>
+          <span class="fd">Uma interface centralizada para todas essas atualizações, pensada para quem não é técnico.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="lbl"><span class="n">02</span> Como funciona por trás</div>
+    <div class="c">
+      <p>Para que o painel funcione de forma confiável, o sistema é construído sobre uma base técnica sólida:</p>
+      <div class="fronts">
+        <div>
+          <span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7.5" ry="2.5" /><path d="M4.5 6v6c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5V6M4.5 12v6c0 1.4 3.4 2.5 7.5 2.5s7.5-1.1 7.5-2.5v-6" /></svg></span>
+          <b>Banco de dados dedicado</b>
+          <span class="fd">Banners, arquivos e relatórios ficam armazenados de forma estruturada e segura.</span>
+        </div>
+        <div>
+          <span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2" /><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" /></svg></span>
+          <b>Acesso restrito e autenticado</b>
+          <span class="fd">Login exclusivo para a equipe autorizada do Grupo BrasilServ.</span>
+        </div>
+        <div>
+          <span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 12a3.5 3.5 0 0 1 0-5l2-2a3.5 3.5 0 0 1 5 5l-1 1" /><path d="M15 12a3.5 3.5 0 0 1 0 5l-2 2a3.5 3.5 0 0 1-5-5l1-1" /></svg></span>
+          <b>Backups automáticos</b>
+          <span class="fd">Rotina de backup do conteúdo e dos arquivos enviados, reduzindo o risco de perda de dados.</span>
+        </div>
+        <div>
+          <span class="fi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" /><path d="M9 11.8l2.2 2.2 4-4.5" /></svg></span>
+          <b>Ambiente digital seguro</b>
+          <span class="fd">Boas práticas de segurança aplicadas ao ambiente que hospeda o sistema.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="lbl"><span class="n">03</span> O que está incluído</div>
+    <div class="c">
+      <ul class="dl one">
+        <li>Painel administrativo interativo integrado ao site</li>
+        <li>Sistema de banners com rotação periódica configurável</li>
+        <li>Área de upload de arquivos para a NR1</li>
+        <li>Gestão do portal da transparência</li>
+        <li>Banco de dados próprio para o sistema</li>
+        <li>Backups automáticos do conteúdo</li>
+        <li>Ambiente digital com boas práticas de segurança</li>
+      </ul>
+      <p class="note"><b>Escopo.</b> Esta proposta contempla os itens descritos nesta seção. Solicitações adicionais são avaliadas separadamente.</p>
+    </div>
+  </section>
+
+  <section class="row">
+    <div class="lbl"><span class="n">04</span> Investimento</div>
+    <div class="c">
+      <p>Existem <b>duas formas</b> de contratar o desenvolvimento deste sistema. A diferença está em quem assume as manutenções e o suporte depois da entrega.</p>
+
+      <div class="offer-grid">
+        <div class="offer">
+          <div class="offer-top"></div>
+          <div class="offer-body">
+            <div class="offer-head"><span class="eyebrow">Trilha A</span></div>
+            <p class="offer-title">Pagamento único</p>
+            <p class="offer-sub">Você paga uma única vez pelo desenvolvimento completo do sistema.</p>
+            <ul class="dl small">
+              <li>Painel administrativo completo</li>
+              <li>Banners, NR1 e portal da transparência</li>
+              <li>Banco de dados e backups configurados</li>
+            </ul>
+            <div class="offer-div"></div>
+            <div class="offer-price">
+              <span class="price">R$ 300</span>
+              <span class="pay">pagamento único</span>
+            </div>
+            <p class="offer-foot"><b>Após a entrega,</b> eventuais manutenções e suportes são orçados e cobrados separadamente, conforme a necessidade.</p>
+          </div>
+        </div>
+
+        <div class="offer rec">
+          <div class="offer-top"></div>
+          <div class="offer-body">
+            <div class="offer-head"><span class="eyebrow">Trilha B</span><span class="badge">Recomendado</span></div>
+            <p class="offer-title">Plano de Gestão Mensal</p>
+            <p class="offer-sub">Gestão completa do site e do ambiente digital, com o painel administrativo incluso como bônus.</p>
+            <ul class="dl small">
+              <li>Gestão completa do site</li>
+              <li>Segurança contínua do ambiente digital</li>
+              <li>Backups de segurança periódicos</li>
+              <li>Suporte técnico contínuo incluso</li>
+              <li>Manutenção com ajustes e atualizações do site inclusa</li>
+              <li class="free"><b>Bônus: painel administrativo</b> (banners, NR1 e portal da transparência) incluso, sem cobrança adicional</li>
+              <li class="free"><b>Bônus: Google Meu Negócio</b> — vinculação, atualização e otimização do site no perfil da empresa</li>
+            </ul>
+            <div class="offer-div"></div>
+            <div class="offer-price">
+              <span class="price">R$ 147</span><span class="per">/mês</span>
+            </div>
+            <p class="offer-foot"><b>Um único valor mensal</b> cobre o site, a segurança, os backups, o suporte, a manutenção e o sistema — sem custos extras.<br>Plano com fidelidade mínima de 12 meses.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="vs"><span>em resumo</span></div>
+      <div class="bonus">
+        <span class="btag">Diferença entre as trilhas</span>
+        <div class="bitems">
+          <div><b>Trilha A — pagamento único</b><span>menor custo inicial, mas o site fica sem monitoramento. Se falhar ou sair do ar, o suporte é resolvido depois — e cobrado à parte.</span></div>
+          <div><b>Trilha B — gestão mensal</b><span>ambiente sob cuidado contínuo: segurança monitorada, backups regulares e suporte pronto para agir na hora. Menos risco, zero dor de cabeça.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row next">
+    <div class="lbl"><span class="n">05</span> Aceite da proposta</div>
+    <div class="c">
+      <p class="cta-h">Para finalizar, é só nos informar e entrar em contato para darmos seguimento.</p>
+      <a class="cta" href="https://api.whatsapp.com/send/?phone=553298281835&text=Ol%C3%A1!%20Quero%20seguir%20com%20a%20proposta%20do%20painel%20administrativo." target="_blank" rel="noopener">
+        Falar no WhatsApp
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </a>
+      <span class="validity">Proposta válida por 7 dias</span>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <img class="foot-logo" src="apollo-logo.png" alt="Apollo Gestão Digital">
+    <span class="foot-info">
+      Proposta comercial · Grupo BrasilServ<br>
+      24/08/2026
+    </span>
+  </footer>
+
+</div>
+</body>
+</html>
